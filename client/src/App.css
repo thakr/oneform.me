@@ -25,6 +25,7 @@
   --shadow-color: #888888;
   --input-color: #f2f2f2;
   --link-color: #0000EE;
+  --dropdown-color: #e4e4e4;
 }
 .dark-bg {
   --theme-color: rgb(8, 8, 8);
@@ -33,6 +34,7 @@
   --shadow-color: #000000;
   --input-color: #232323;
   --link-color: white;
+  --dropdown-color: #e4e4e4;
 }
 
 :root {
@@ -413,6 +415,7 @@ nav {
   transform: translateX(-80px);
 }
 .dropdown-item {
+  
   padding: .6rem;
   height:20px;
   display: flex;
@@ -421,6 +424,7 @@ nav {
   color: var(--txt-color)
 }
 .dropdown-item:hover {
+  text-decoration: none;
   background-color: var(--dropdown-color);
 }
 .my-forms-wrapper {
