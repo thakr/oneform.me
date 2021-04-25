@@ -4,7 +4,7 @@ export default function Navbar() {
   return (
     <nav>
       <div className="navbar-container">
-        <h1>oneform</h1>
+        <h1><a href="/dashboard" id="navbar-title">oneform</a></h1>
         <div className="navbar">
           <NavItem img={false} text="Dashboard" link="/dashboard"/>
           <NavItem img={false} text="Create" link="/create"/>

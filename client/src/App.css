@@ -478,6 +478,13 @@ nav {
   cursor: pointer;
   opacity: 100;
 }
+#navbar-title {
+  color: var(--txt-color);
+}
+#navbar-title:hover {
+  color: var(--txt-color);
+  text-decoration: none;
+}
 a{
   color: var(--link-color);
   font-weight: 600;
