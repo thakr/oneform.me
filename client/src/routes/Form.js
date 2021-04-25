@@ -113,7 +113,7 @@ export const Form = ({match, history}) => {
         if (v.type === "short-answer") {
           return <ShortAnswer deactive={false}key = {uuid()} question = {v.question} user_answers = {formAnswers} id = {match.params.id} correct_answers = {v.correct_answers || ''}/>
         }
-      }) : !viewUserAnswers ? form.usersAnswered.map(v => {
+      }) : !viewUserAnswers ? form.usersAnswered.length < 1 ? <p>Nobody has submitted anything on your form yet. Go share it!</p> : form.usersAnswered.map(v => {
           return <div key={v.id} className="view-responses-item"><p>{v.name}</p><button className="view-answers-btn" onClick={() => viewResponses(v.id, v.name)}>View responses</button></div>
         }): 
         form.questions.map(v => {
