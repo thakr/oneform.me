@@ -41,7 +41,7 @@ app.post('/api/send-answer', function (req, res) {
         if (user.questionsAnswered[i].responses.question !== req.body.question) {
           user.questionsAnswered[i].responses.push({question: req.body.question, answer: req.body.data})
           Form.findById(req.body.id).then(form => {
-            if (form.usersAnswered.indexOf(req.body.userId) === -1) {
+            if (form.usersAnswered.indexOf({id: user._id, name:user.name}) === -1) {
               form.usersAnswered.push({id: user._id, name:user.name})
               form.markModified("usersAnswered")
               form.save()
@@ -59,7 +59,7 @@ app.post('/api/send-answer', function (req, res) {
     if (haveId === false) {
       user.questionsAnswered.push({id: req.body.id, responses: [{question: req.body.question, answer: req.body.data}]})
       Form.findById(req.body.id).then(form => {
-        if (form.usersAnswered.indexOf(req.body.userId) === -1) {
+        if (form.usersAnswered.indexOf({id: user._id, name:user.name}) === -1) {
           form.usersAnswered.push({id: user._id, name:user.name})
           form.markModified("usersAnswered")
           form.save()
