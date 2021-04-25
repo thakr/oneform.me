@@ -32,7 +32,6 @@ mongoose.connect(process.env.MONGO_URI, {
 //let db = mongoose.connection;
 
 app.post('/api/send-answer', function (req, res) {
-  console.log('req sent')
   User.findById(req.body.userId).then(user => {
     let haveId = false
     for (let i = 0; i < user.questionsAnswered.length; i++) {
@@ -41,7 +40,13 @@ app.post('/api/send-answer', function (req, res) {
         if (user.questionsAnswered[i].responses.question !== req.body.question) {
           user.questionsAnswered[i].responses.push({question: req.body.question, answer: req.body.data})
           Form.findById(req.body.id).then(form => {
-            if (form.usersAnswered.indexOf({id: user._id, name:user.name}) === -1) {
+            let found = false
+            form.usersAnswered.map(v => {
+              if (v.id.toString() == user._id.toString()) {
+                found = true
+              }
+            })
+            if (found === false) {
               form.usersAnswered.push({id: user._id, name:user.name})
               form.markModified("usersAnswered")
               form.save()
@@ -59,7 +64,15 @@ app.post('/api/send-answer', function (req, res) {
     if (haveId === false) {
       user.questionsAnswered.push({id: req.body.id, responses: [{question: req.body.question, answer: req.body.data}]})
       Form.findById(req.body.id).then(form => {
-        if (form.usersAnswered.indexOf({id: user._id, name:user.name}) === -1) {
+        let found = false
+
+        form.usersAnswered.map(v => {
+
+          if (v.id.toString() == user._id.toString()) {
+            found = true
+          }
+        })
+        if (found === false) {
           form.usersAnswered.push({id: user._id, name:user.name})
           form.markModified("usersAnswered")
           form.save()
@@ -76,7 +89,6 @@ app.post('/api/send-answer', function (req, res) {
 
 app.post('/api/create-form', (req,res) => {
   let user = req.body.user;
-  console.log(user)
   const newForm = new Form({
     title: req.body.title,
     author: user.name,
@@ -206,7 +218,6 @@ app.get('/api/get-user-forms', async (req,res) => {
       Form.findOne({_id: v}).then(form => {
         if (form) {
           forms.push(form)
-          console.log(forms)
           
         } else {
           console.log('not found')
