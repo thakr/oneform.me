@@ -26,20 +26,24 @@ export const Form = ({match, history}) => {
 
   const query = new URLSearchParams(useLocation().search)
   const userAnswers = query.get("userAnswers")
-  
+
   useEffect(() => {
-    if (userAnswers && JSON.parse(localStorage.getItem('user'))._id === form.authorid) {
+
+    if (form) {
+      if (userAnswers && JSON.parse(localStorage.getItem('user'))._id === form.authorid) {
       
-      async function fetchData() {
-        const res2 = await fetch(`/api/formanswers?userId=${userAnswers}&id=${match.params.id}`)
-        const data2 = await res2.json()
-        setUserFormAnswers(data2)
+        async function fetchData() {
+          const res2 = await fetch(`/api/formanswers?userId=${userAnswers}&id=${match.params.id}`)
+          const data2 = await res2.json()
+          setUserFormAnswers(data2)
+        }
+        fetchData().then(() => setViewUserAnswers(true))
+        
+      } else {
+        setViewUserAnswers(false)
       }
-      fetchData().then(() => setViewUserAnswers(true))
-      
-    } else {
-      setViewUserAnswers(false)
     }
+    
   }, [match])
   
 

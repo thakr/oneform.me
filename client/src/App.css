@@ -454,6 +454,7 @@ nav {
 }
 .my-forms-item {
   display: flex;
+  background-color: var(--theme-color);
   align-items: center;
   justify-content: space-between;
   flex-wrap: nowrap;
@@ -472,6 +473,7 @@ nav {
   transition: opacity .1s ease-in-out;
 }
 .my-forms-trash-icon:hover {
+  color: var(--txt-color);
   cursor: pointer;
   opacity: 100;
 }
