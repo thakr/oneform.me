@@ -8,11 +8,11 @@ export const MyForms = () => {
   let d = new Date();
   let n = d.getHours();
   if (n > 18) {
-    document.documentElement.className = "day-theme"
-  } else if (n < 4) {
-    document.documentElement.className = "day-theme"
-  } else if (n > 4) {
     document.documentElement.className = "night-theme"
+  } else if (n < 4) {
+    document.documentElement.className = "night-theme"
+  } else if (n > 4) {
+    document.documentElement.className = "day-theme"
   }
   const [formData, setFormData] = useState([])
   const [loading,setLoading] = useState(true)
