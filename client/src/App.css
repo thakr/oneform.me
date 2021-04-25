@@ -468,6 +468,7 @@ nav {
   opacity: 0;
   width: 20px;;
   height:20px;
+  color: var(--txt-color);
   transition: opacity .1s ease-in-out;
 }
 .my-forms-trash-icon:hover {
