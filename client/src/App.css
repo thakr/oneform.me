@@ -16,6 +16,7 @@
   --txt-color: black;
   --shadow-color: #888888;
   --dropdown-color: #e4e4e4;
+  --filter-invert: invert(0)
 }
 .night-theme {
   --background-body: url(./images/nighttimebg.svg) no-repeat center center fixed;
@@ -24,6 +25,7 @@
   --txt-color: rgb(240, 240, 240);
   --shadow-color: #000000;
   --dropdown-color: #2f2f2f;
+  --filter-invert: invert(0.9)
 }
 .white-bg {
   --background-body: white;
@@ -469,11 +471,10 @@ nav {
   opacity: 0;
   width: 20px;;
   height:20px;
-  color: var(--txt-color);
   transition: opacity .1s ease-in-out;
 }
 .my-forms-trash-icon:hover {
-  color: var(--txt-color);
+  filter: var(--filter-invert);
   cursor: pointer;
   opacity: 100;
 }
