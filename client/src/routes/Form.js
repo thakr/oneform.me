@@ -28,7 +28,7 @@ export const Form = ({match, history}) => {
   const userAnswers = query.get("userAnswers")
   
   useEffect(() => {
-    if (userAnswers) {
+    if (userAnswers && JSON.parse(localStorage.getItem('user'))._id === form.authorid) {
       
       async function fetchData() {
         const res2 = await fetch(`/api/formanswers?userId=${userAnswers}&id=${match.params.id}`)
