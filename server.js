@@ -135,6 +135,7 @@ app.get('/api/forms', (req,res) =>{
       res.send(form)
     } else {
       console.log('not found')
+      res.send({error: 404})
     }
   }).catch(err => {
     if (err instanceof mongoose.CastError) {
@@ -143,18 +144,6 @@ app.get('/api/forms', (req,res) =>{
       res.send({error: 'Unknown'})
     }
   })
-  // let found = null
-  // let id = parseInt(req.query.id)
-  // for (let i= 0; i < forms.length; i++) {
-  //   if (forms[i].id === id) {
-  //     found = i;
-  //   } 
-  // }
-  // if (found != null) {
-  //   res.send(forms[found])
-  // } else {
-  //   res.sendStatus(404);
-  // }
   
 });
 app.post('/api/auth/google', async (req,res) => {

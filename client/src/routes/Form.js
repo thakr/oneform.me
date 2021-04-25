@@ -4,6 +4,7 @@ import ShortAnswer from '../components/ShortAnswer';
 import {v4 as uuid} from 'uuid';
 import { Redirect,useLocation } from 'react-router-dom';
 import Navbar from '../components/Navbar'
+import Loader from "react-loader-spinner";
 
 export const Form = ({match, history}) => {
   let d = new Date();
@@ -106,9 +107,15 @@ export const Form = ({match, history}) => {
     
   <div className = "wrapper">
     {checkLoggedIn()}
-    {error? <h1 style={{color: 'red', textAlign:'center'}}>{error} error</h1> : loading ? <h1>Loading...</h1> : !viewUserAnswers? <h1 style={{textAlign: 'center'}}>{form.title} by {form.author}</h1> : <h1 style={{textAlign: 'center'}}>{viewingUser}'s responses</h1>}
+    {error? <h1 style={{color: 'red', textAlign:'center'}}>{error} error</h1> : loading ? <h1> </h1> : !viewUserAnswers? <h1 style={{textAlign: 'center'}}>{form.title} by {form.author}</h1> : <h1 style={{textAlign: 'center'}}>{viewingUser}'s responses</h1>}
     <div className = "content">
-      {error? error === 404 ? <p>That form was not found. Please try again.</p> : <p>There was an unknown error. Please try again later.</p> : loading ? <p>Loading...</p> : JSON.parse(localStorage.getItem('user'))._id !== form.authorid ? form.questions.map(v => {
+      {error? error === 404 ? <p>That form was not found. Please try again.</p> : <p>There was an unknown error. Please try again later.</p> : loading ? 
+      <div className = "loader"><Loader
+        type="TailSpin"
+        color="#00BFFF"
+        height={50}
+        width={50}
+      /></div> : JSON.parse(localStorage.getItem('user'))._id !== form.authorid ? form.questions.map(v => {
         if (v.type === "multiple-choice") {
           return <MultipleChoice deactive={false} key = {uuid()} question = {v.question} responses = {v.answers} user_answers = {formAnswers} id = {match.params.id} correct_answers = {v.correct_answers || ''}/>
         }

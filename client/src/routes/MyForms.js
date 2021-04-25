@@ -2,6 +2,7 @@ import React, {useState,useEffect} from 'react'
 import {Redirect} from 'react-router-dom'
 import Navbar from '../components/Navbar.js'
 import trash from '../images/trash.svg'
+import Loader from "react-loader-spinner";
 
 
 export const MyForms = () => {
@@ -66,7 +67,12 @@ export const MyForms = () => {
     <>
     <Navbar />
     <div className="my-forms-wrapper">
-      {loading? <p style={{textAlign: 'center'}}>Loading...</p> : 
+      {loading? <div className="loader"><Loader
+          type="TailSpin"
+          color="#00BFFF"
+          height={50}
+          width={50}
+        /></div>  : 
       formData.length === 0? <p style={{textAlign: 'center'}}>Looks like you don't have any forms. <a href = "/create">Create</a> some to get started.</p>:         
       formData.map((v,i) => {
 

@@ -524,3 +524,6 @@ a:hover {
   max-height: 20px;
   margin: 20px 0px 20px 0px;
 }
+.loader {
+  text-align: center;
+}

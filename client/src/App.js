@@ -8,6 +8,7 @@ import {NotFound} from "./routes/NotFound"
 import {Dashboard} from "./routes/Dashboard"
 import {Create} from "./routes/Create"
 import {MyForms} from './routes/MyForms'
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 function App() {
   const [user, setUser] = useState(null)
