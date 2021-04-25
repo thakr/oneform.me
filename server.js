@@ -47,7 +47,7 @@ app.post('/api/send-answer', function (req, res) {
               }
             })
             if (found === false) {
-              form.usersAnswered.push({id: user._id, name:user.name})
+              form.usersAnswered.push({id: user._id, name:user.name, email:user.email})
               form.markModified("usersAnswered")
               form.save()
             }
@@ -73,7 +73,7 @@ app.post('/api/send-answer', function (req, res) {
           }
         })
         if (found === false) {
-          form.usersAnswered.push({id: user._id, name:user.name})
+          form.usersAnswered.push({id: user._id, name:user.name, email:user.email})
           form.markModified("usersAnswered")
           form.save()
         }

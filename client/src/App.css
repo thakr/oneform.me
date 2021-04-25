@@ -12,7 +12,7 @@
 .day-theme {
   --background-body: url(./images/daytimebg.svg) no-repeat center center fixed;
   --theme-color: white;
-  --theme-color-nav: rgb(255,255,255,0.8);
+  --theme-color-nav: rgb(255,255,255);
   --txt-color: black;
   --shadow-color: #888888;
   --dropdown-color: #e4e4e4;
@@ -21,7 +21,7 @@
 .night-theme {
   --background-body: url(./images/nighttimebg.svg) no-repeat center center fixed;
   --theme-color: rgb(8, 8, 8);
-  --theme-color-nav: rgb(0,0,0,0.8);
+  --theme-color-nav: rgb(0,0,0);
   --txt-color: rgb(240, 240, 240);
   --shadow-color: #000000;
   --dropdown-color: #2f2f2f;
@@ -496,6 +496,7 @@ a:hover {
 }
 
 .view-answers-btn {
+  max-height: 38px;
   box-shadow: 0px 0px 0px var(--shadow-color);
   font-size: 1em;
   font-family: Karla, serif;
@@ -524,6 +525,30 @@ a:hover {
   max-height: 20px;
   margin: 20px 0px 20px 0px;
 }
+@media (max-width: 1300px) {
+  .view-responses-item {
+    text-overflow: clip;
+    flex-wrap: wrap;
+    max-height: 100px;
+    width: 100%;
+  }
+  .view-answers-btn {
+    
+    font-size: 1em;
+  }
+}
 .loader {
   text-align: center;
+}
+.login-wrapper {
+  display: flex;
+  height:100%;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  
+}
+.login-container {
+  width: 40%;
+  height: 30%;
 }

@@ -24,7 +24,7 @@ export const Form = ({match, history}) => {
   const [viewUserAnswers, setViewUserAnswers] = useState(false)
   const [userFormAnswers, setUserFormAnswers] = useState(null)
   const [viewingUser, setViewingUser] = useState('')
-
+  const [loadingResponse, setLoadingResponse] = useState(false)
   const query = new URLSearchParams(useLocation().search)
   const userAnswers = query.get("userAnswers")
   let apiprefix = ""
@@ -33,13 +33,13 @@ export const Form = ({match, history}) => {
 
     if (form) {
       if (userAnswers && JSON.parse(localStorage.getItem('user'))._id === form.authorid) {
-      
+        setViewUserAnswers(true);
         async function fetchData() {
           const res2 = await fetch(`${apiprefix}/formanswers?userId=${userAnswers}&id=${match.params.id}`)
           const data2 = await res2.json()
           setUserFormAnswers(data2)
         }
-        fetchData().then(() => setViewUserAnswers(true))
+        fetchData().then(() => { setLoadingResponse(false)})
         
       } else {
         setViewUserAnswers(false)
@@ -99,17 +99,19 @@ export const Form = ({match, history}) => {
     }, [match]);
 
     const viewResponses = (ua,un) => {
+      
       history.push(`/form/${match.params.id}?userAnswers=${ua}`)
+      setLoadingResponse(true)
       setViewingUser(un)
     }
-    
+    console.log(loading)
   return (
     
   <div className = "wrapper">
     {checkLoggedIn()}
     {error? <h1 style={{color: 'red', textAlign:'center'}}>{error} error</h1> : loading ? <h1> </h1> : !viewUserAnswers? <h1 style={{textAlign: 'center'}}>{form.title} by {form.author}</h1> : <h1 style={{textAlign: 'center'}}>{viewingUser}'s responses</h1>}
     <div className = "content">
-      {error? error === 404 ? <p>That form was not found. Please try again.</p> : <p>There was an unknown error. Please try again later.</p> : loading ? 
+      {error? error === 404 ? <p>That form was not found. Please try again.</p> : <p>There was an unknown error. Please try again later.</p> : loading || loadingResponse ? 
       <div className = "loader"><Loader
         type="TailSpin"
         color="#00BFFF"
@@ -123,8 +125,9 @@ export const Form = ({match, history}) => {
           return <ShortAnswer deactive={false}key = {uuid()} question = {v.question} user_answers = {formAnswers} id = {match.params.id} correct_answers = {v.correct_answers || ''}/>
         }
       }) : !viewUserAnswers ? form.usersAnswered.length < 1 ? <p>Nobody has submitted anything on your form yet. Go share it!</p> : form.usersAnswered.map(v => {
-          return <div key={v.id} className="view-responses-item"><p>{v.name}</p><button className="view-answers-btn" onClick={() => viewResponses(v.id, v.name)}>View responses</button></div>
-        }): 
+        console.log(v)
+          return <div key={v.id} className="view-responses-item"><p>{v.name} ({v.email})</p><button className="view-answers-btn" onClick={() => viewResponses(v.id, v.name)}>View response</button></div>
+        }): !loadingResponse &&
         form.questions.map(v => {
           if (v.type === "multiple-choice") {
             return <MultipleChoice deactive={true} key = {uuid()} question = {v.question} responses = {v.answers} user_answers = {userFormAnswers} id = {match.params.id} correct_answers = {v.correct_answers || ''}/>
