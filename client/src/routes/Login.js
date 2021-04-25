@@ -11,8 +11,8 @@ export const Login = (props) => {
   if (redirect == null) {
     redirect = ''
   }
+  
   const handleLogin = async googleData => { 
-    
     const res = await fetch("/api/auth/google", {
       
         method: "POST",
