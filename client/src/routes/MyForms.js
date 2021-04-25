@@ -17,10 +17,11 @@ export const MyForms = () => {
   const [formData, setFormData] = useState([])
   const [loading,setLoading] = useState(true)
   const [deleting,setDeleting] = useState([])
-
+  let apiprefix = ""
+  process.env.NODE_ENV === "development" ? apiprefix = "http://localhost:8080/api" : apiprefix = "/api";
   async function fetchData() {
     if (localStorage.getItem('user') != null) {
-      const user = await fetch(`/api/get-user-forms?id=${JSON.parse(localStorage.getItem('user'))._id}`, {
+      const user = await fetch(`${apiprefix}/get-user-forms?id=${JSON.parse(localStorage.getItem('user'))._id}`, {
         method: "GET"
       })
       let data = await user.json()
@@ -40,7 +41,7 @@ export const MyForms = () => {
 
   const deleteForm = async (id) => {
     setDeleting([...deleting, id])
-    const res = await fetch('/api/remove-form', {
+    const res = await fetch(`${apiprefix}/remove-form`, {
       method: 'POST',
         headers: {
           'Content-Type': 'application/json; charset=UTF-8',

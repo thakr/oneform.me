@@ -26,14 +26,15 @@ export const Form = ({match, history}) => {
 
   const query = new URLSearchParams(useLocation().search)
   const userAnswers = query.get("userAnswers")
-
+  let apiprefix = ""
+  process.env.NODE_ENV === "development" ? apiprefix = "http://localhost:8080/api" : apiprefix = "/api";
   useEffect(() => {
 
     if (form) {
       if (userAnswers && JSON.parse(localStorage.getItem('user'))._id === form.authorid) {
       
         async function fetchData() {
-          const res2 = await fetch(`/api/formanswers?userId=${userAnswers}&id=${match.params.id}`)
+          const res2 = await fetch(`${apiprefix}/formanswers?userId=${userAnswers}&id=${match.params.id}`)
           const data2 = await res2.json()
           setUserFormAnswers(data2)
         }
@@ -58,7 +59,7 @@ export const Form = ({match, history}) => {
   useEffect(() => {
     async function fetchData() {
       if (localStorage.getItem('user') != null) {
-        const user = await fetch(`/api/user?id=${JSON.parse(localStorage.getItem('user'))._id}`, {
+        const user = await fetch(`${apiprefix}/user?id=${JSON.parse(localStorage.getItem('user'))._id}`, {
           method: "GET"
         })
         const data = await user.json()
@@ -72,7 +73,7 @@ export const Form = ({match, history}) => {
   useEffect(() => {
     async function fetchData() {
       if (localStorage.getItem('user')) {
-        const res = await fetch(`/api/forms?id=${match.params.id}`);
+        const res = await fetch(`${apiprefix}/forms?id=${match.params.id}`);
         const data = await res.json();
         if (data.error) {
           setError(data.error)
@@ -81,7 +82,7 @@ export const Form = ({match, history}) => {
           setForm(data)
 
           if (JSON.parse(localStorage.getItem('user'))._id !== data.authorid) {
-            const res2 = await fetch(`/api/formanswers?userId=${JSON.parse(localStorage.getItem('user'))._id}&id=${match.params.id}`)
+            const res2 = await fetch(`${apiprefix}/formanswers?userId=${JSON.parse(localStorage.getItem('user'))._id}&id=${match.params.id}`)
             const data2 = await res2.json()
             
             setFormAnswers(data2)
@@ -100,7 +101,7 @@ export const Form = ({match, history}) => {
       history.push(`/form/${match.params.id}?userAnswers=${ua}`)
       setViewingUser(un)
     }
-    console.log(viewUserAnswers)
+    
   return (
     
   <div className = "wrapper">
@@ -122,6 +123,7 @@ export const Form = ({match, history}) => {
             return <MultipleChoice deactive={true} key = {uuid()} question = {v.question} responses = {v.answers} user_answers = {userFormAnswers} id = {match.params.id} correct_answers = {v.correct_answers || ''}/>
           }
           if (v.type === "short-answer") {
+            
             return <ShortAnswer deactive={true} key = {uuid()} question = {v.question} user_answers = {userFormAnswers} id = {match.params.id} correct_answers = {v.correct_answers || ''}/>
           }
         })}

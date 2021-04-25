@@ -7,7 +7,8 @@ const MultipleChoice = ({deactive,question,responses,user_answers,id, correct_an
   const [formDisabled, setFormDisabled] = useState(false)
   const [submitting, setSubmitting] = useState("Submit")
   const [correct, setCorrect] = useState('')
-
+  let apiprefix = ""
+  process.env.NODE_ENV === "development" ? apiprefix = "http://localhost:8080/api" : apiprefix = "/api";
   useEffect(() => {
     for (let i=0; i < user_answers.responses.length; i++) {
       if (user_answers.responses[i].question === question) {
@@ -40,7 +41,7 @@ const MultipleChoice = ({deactive,question,responses,user_answers,id, correct_an
       setSubmitting("Submitting...")
   
       if (formData.data !== '') {
-        fetch('/api/send-answer', {
+        fetch(`${apiprefix}/send-answer`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json; charset=UTF-8',
@@ -48,7 +49,6 @@ const MultipleChoice = ({deactive,question,responses,user_answers,id, correct_an
           body: JSON.stringify(formData)
         })
         .then(function(res) {
-          console.log(res)
           if (correct_answers) {
             let isCorrect = false
             for (let i = 0; i < correct_answers.length; i++) {

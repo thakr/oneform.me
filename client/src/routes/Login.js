@@ -3,7 +3,7 @@ import {GoogleLogin} from "react-google-login"
 import {Redirect, useLocation} from 'react-router-dom'
 
 export const Login = (props) => {
-  
+  console.log(process.env.NODE_ENV)
   const [user, setUser] = useState(null)
   document.documentElement.className = "white-bg"
   let query = new URLSearchParams(useLocation().search)
@@ -12,8 +12,10 @@ export const Login = (props) => {
     redirect = ''
   }
   
-  const handleLogin = async googleData => { 
-    const res = await fetch("/api/auth/google", {
+  const handleLogin = async googleData => {
+    let apiprefix = ""
+    process.env.NODE_ENV === "development" ? apiprefix = "http://localhost:8080/api" : apiprefix = "/api";
+    const res = await fetch(`${apiprefix}/auth/google`, {
       
         method: "POST",
         body: JSON.stringify({

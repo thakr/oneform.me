@@ -10,7 +10,8 @@ export function Create() {
   const [title, setTitle] = useState('')
   const [submitted, setSubmitted] = useState(false)
   const [errorTxt, setErrorTxt] = useState('')
-
+  let apiprefix = ""
+  process.env.NODE_ENV === "development" ? apiprefix = "http://localhost:8080/api" : apiprefix = "/api";
   const addQuestion = (event) => {
     event.preventDefault()
     setErrorTxt('')
@@ -31,7 +32,7 @@ export function Create() {
         delete v.key
       })
       formData.questions = newArr
-      const res = await fetch('/api/create-form', {
+      const res = await fetch(`${apiprefix}/create-form`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json; charset=UTF-8',
