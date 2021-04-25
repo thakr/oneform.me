@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import {v4 as uuid} from 'uuid';
 
-const MultipleChoice = ({question,responses,user_answers,id, correct_answers}) =>{ //answers
+const MultipleChoice = ({deactive,question,responses,user_answers,id, correct_answers}) =>{ //answers
   const userId = JSON.parse(localStorage.getItem('user'))._id
   const [formData, setFormData] = useState({'question': question, 'data': '', 'userId': userId, 'id': id})
   const [formDisabled, setFormDisabled] = useState(false)
@@ -35,8 +35,8 @@ const MultipleChoice = ({question,responses,user_answers,id, correct_answers}) =
     setFormData({...formData,'data': event.target.value})
   }
   const handleSubmit = event => {
-    if (formDisabled !== true) {
-      event.preventDefault();
+    event.preventDefault();
+    if (formDisabled !== true && deactive !== true) {
       setSubmitting("Submitting...")
   
       if (formData.data !== '') {
@@ -79,12 +79,13 @@ const MultipleChoice = ({question,responses,user_answers,id, correct_answers}) =
       <h2>{question} </h2>
       <form onSubmit={handleSubmit}>
         {responses.map(res => (
+          
           <div key = {uuid()} className="response">
-            <input type="radio" name = "response" id = {res} value={res} onChange={handleChange} checked = {formData.data === res} disabled = {formDisabled}/>
+            <input type="radio" name = "response" id = {res} value={res} onChange={handleChange} checked = {formData.data === res} disabled = {deactive || formDisabled}/>
             <label htmlFor={res}>{res}</label>
           </div>
         ))}
-        <input className = "submit" type ="submit" value = {submitting} disabled = {formDisabled}/>
+        <input className = "submit" type ="submit" value = {submitting} disabled = {deactive || formDisabled}/>
       </form>
     </div>
   )

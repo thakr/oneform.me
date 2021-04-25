@@ -7,12 +7,12 @@ import trash from '../images/trash.svg'
 export const MyForms = () => {
   let d = new Date();
   let n = d.getHours();
-  if (n > 20) {
-    document.documentElement.className = "dark-bg"
+  if (n > 18) {
+    document.documentElement.className = "night-theme"
   } else if (n < 4) {
-    document.documentElement.className = "dark-bg"
+    document.documentElement.className = "night-theme"
   } else if (n > 4) {
-    document.documentElement.className = "white-bg"
+    document.documentElement.className = "day-theme"
   }
   const [formData, setFormData] = useState([])
   const [loading,setLoading] = useState(true)

@@ -9,9 +9,16 @@ const FormSchema = mongoose.Schema({
     type: String,
     required: true
   },
+  authorid: {
+    type: String,
+    required: true
+  },
   questions: {
     type: Array,
     required: true
+  },
+  usersAnswered: {
+    type: Array
   },
   dateCreated: {
     type: Date,

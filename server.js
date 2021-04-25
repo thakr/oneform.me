@@ -32,6 +32,7 @@ mongoose.connect(process.env.MONGO_URI, {
 //let db = mongoose.connection;
 
 app.post('/api/send-answer', function (req, res) {
+  console.log('req sent')
   User.findById(req.body.userId).then(user => {
     let haveId = false
     for (let i = 0; i < user.questionsAnswered.length; i++) {
@@ -39,6 +40,14 @@ app.post('/api/send-answer', function (req, res) {
         haveId = true
         if (user.questionsAnswered[i].responses.question !== req.body.question) {
           user.questionsAnswered[i].responses.push({question: req.body.question, answer: req.body.data})
+          Form.findById(req.body.id).then(form => {
+            if (form.usersAnswered.indexOf(req.body.userId) === -1) {
+              form.usersAnswered.push({id: user._id, name:user.name})
+              form.markModified("usersAnswered")
+              form.save()
+            }
+            
+          })
           user.markModified('questionsAnswered')
           user.save((err) => {
             if (err) console.log(err)
@@ -49,6 +58,14 @@ app.post('/api/send-answer', function (req, res) {
     }
     if (haveId === false) {
       user.questionsAnswered.push({id: req.body.id, responses: [{question: req.body.question, answer: req.body.data}]})
+      Form.findById(req.body.id).then(form => {
+        if (form.usersAnswered.indexOf(req.body.userId) === -1) {
+          form.usersAnswered.push({id: user._id, name:user.name})
+          form.markModified("usersAnswered")
+          form.save()
+        }
+        
+      })
       user.markModified('questionsAnswered')
       user.save()
     }
@@ -63,6 +80,7 @@ app.post('/api/create-form', (req,res) => {
   const newForm = new Form({
     title: req.body.title,
     author: user.name,
+    authorid: user._id,
     questions: req.body.questions
   })
   newForm.save().then(newForm => {

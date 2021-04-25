@@ -1,6 +1,8 @@
 import React, {useState} from 'react'
 import {v4 as uuid} from 'uuid';
 import {Question} from '../components/Question'
+import Navbar from '../components/Navbar.js'
+
 
 export function Create() {
   document.documentElement.className = "img-bg"
@@ -88,24 +90,27 @@ export function Create() {
   }
 
   return (
-    <div className="create-form-wrapper" >
-      {!submitted? 
-      <form autoComplete="off" onSubmit = {handleSubmit}>
-        <input className = "create-form-title" type="text" onChange = {handleInputChange} placeholder="Form title" value={title} required/>
-        <div className="create-form-questions-wrapper">
-          {questions.map((v,i) => {
-            return (
-              <div>
-                <Question deleteQuestion = {deleteQuestion} getData= {getData} key={v.key} num={v.key} />
-                <p style={{color: 'red'}}>{errorTxt}</p>
-              </div>
-            )
-          })}
-          <button className = "create-form-button" onClick={addQuestion}>+</button>
-        </div>
-        <input className = "create-form-submit" type="submit" value="Create form"/>
-      </form> :<p>Redirecting...</p>}
-      
-    </div>
+    <>
+      <Navbar />
+      <div className="create-form-wrapper" >
+        {!submitted? 
+        <form autoComplete="off" onSubmit = {handleSubmit}>
+          <input className = "create-form-title" type="text" onChange = {handleInputChange} placeholder="Form title" value={title} required/>
+          <div className="create-form-questions-wrapper">
+            {questions.map((v,i) => {
+              return (
+                <div>
+                  <Question deleteQuestion = {deleteQuestion} getData= {getData} key={v.key} num={v.key} />
+                  <p style={{color: 'red'}}>{errorTxt}</p>
+                </div>
+              )
+            })}
+            <button className = "create-form-button" onClick={addQuestion}>+</button>
+          </div>
+          <input className = "create-form-submit" type="submit" value="Create form"/>
+        </form> :<p>Redirecting...</p>}
+        
+      </div>
+    </>
   )
 }

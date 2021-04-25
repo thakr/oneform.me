@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import {BrowserRouter, Redirect, Route, Switch} from 'react-router-dom'
 import './App.css';
 import {Home} from "./routes/Home"
+import {Login} from "./routes/Login"
 import {Form} from "./routes/Form"
 import {NotFound} from "./routes/NotFound"
 import {Dashboard} from "./routes/Dashboard"
@@ -28,7 +29,8 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Switch> 
-          <Route path='/' exact>{ localStorage.getItem('user') != null ? <Redirect to = "/dashboard"/> : <Home/>}</Route>
+          <Route path='/' exact> <Home/></Route>
+          <Route path='/login' exact>{ localStorage.getItem('user') != null ? <Redirect to = "/dashboard"/> : <Login/>}</Route>
           <Route path='/dashboard' exact><Dashboard/></Route>
           <Route path='/form/:id' exact component={Form}></Route>
           <Route path='/create' exact>{ localStorage.getItem('user') == null ? <Redirect to = "/"/> : <Create/>}</Route>

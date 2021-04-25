@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const ShortAnswer = ({question, user_answers, id, correct_answers}) =>{ 
+const ShortAnswer = ({deactive,question, user_answers, id, correct_answers}) =>{ 
   const userId = JSON.parse(localStorage.getItem('user'))._id
   const [formData, setFormData] = useState({'question': question, 'data': '', 'userId': userId, 'id': id})
   const [formDisabled, setFormDisabled] = useState(false)
@@ -80,8 +80,8 @@ const ShortAnswer = ({question, user_answers, id, correct_answers}) =>{
     <div className = {`short-answer${correct}`}>
       <h2>{question}</h2>
       <form onSubmit={handleSubmit}>
-        <input value={answer? answer : formData.data} className = "short-answer-input" type="text" id="response" name="response" placeholder = "Enter response here" disabled={formDisabled} onChange={handleChange}/>
-        <input className = "submit" type ="submit" value = {submitting} disabled={formDisabled}/>
+        <input value={answer? answer : formData.data} className = "short-answer-input" type="text" id="response" name="response" placeholder = "Enter response here" disabled={deactive || formDisabled} onChange={handleChange}/>
+        <input className = "submit" type ="submit" value = {submitting} disabled={deactive || formDisabled}/>
       </form>
     </div>
   )

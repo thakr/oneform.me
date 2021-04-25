@@ -5,7 +5,7 @@ import Navbar from '../components/Navbar.js'
 export const Dashboard = () => {
   let d = new Date();
   let n = d.getHours();
-  if (n > 20) {
+  if (n > 18) {
     document.documentElement.className = "night-theme"
   } else if (n < 4) {
     document.documentElement.className = "night-theme"
