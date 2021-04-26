@@ -15,7 +15,7 @@ function App() {
   useEffect(() => {
     async function fetchData() {
       if (localStorage.getItem('user')) {
-        const user = await fetch(`/api/user?email=${JSON.parse(localStorage.getItem('user')).email}`, {
+        const user = await fetch(`/api/user?id=${JSON.parse(localStorage.getItem('user'))._id}`, {
           method: "GET"
         })
         const data = await user.json()

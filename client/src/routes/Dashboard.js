@@ -3,6 +3,7 @@ import {Redirect} from 'react-router-dom'
 import Navbar from '../components/Navbar.js'
 
 export const Dashboard = () => {
+  console.log(' Hi there! This is an open source project by Shaan Thakker (demolite-stm). View the repo at https://github.com/demolite-stm/oneform.me ')
   let d = new Date();
   let n = d.getHours();
   if (n > 18) {

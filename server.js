@@ -182,7 +182,7 @@ app.post('/api/auth/google', async (req,res) => {
     
   })
 })
-app.get('/api/user', async (req,res) => {
+app.get('/api/user', (req,res) => {
   const id = req.query.id
   User.findById(id).then(user => {
     if (user) {
@@ -195,7 +195,7 @@ app.get('/api/user', async (req,res) => {
     } else {
       res.status(404);
     }
-  })
+  }).catch(err => console.log(err))
 })
 app.get('/api/get-user-forms', async (req,res) => {
   
