@@ -47,7 +47,7 @@ export const Login = (props) => {
   return (
     <div className="login-wrapper">
       <div className="login-container">
-        <h1>oneform</h1>
+        <h1 className="login-header">oneform</h1>
         {user != null? <Redirect to="/dashboard"/>: <GoogleLogin
           clientId="762756412506-3pojiov2mcf6sosr44qna6oqorr7ntc9.apps.googleusercontent.com"
           buttonText="Log in with Google"

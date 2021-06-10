@@ -12,7 +12,7 @@ dotenv.config();
 const client = new OAuth2Client(process.env.OATH_CLIENT)
 
 app.use(express.json());
-app.use(cors())
+if(!process.env.NODE_ENV === "production") app.use(cors())
 
 app.use(express.urlencoded({extended: true}));
 
